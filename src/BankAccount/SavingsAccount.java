@@ -4,18 +4,19 @@ class SavingsAccount extends BankDetails {
 
     private double procent;
 
-    public SavingsAccount (double balance, String ownerName){
-        super(balance, ownerName  );
+    public SavingsAccount (String ownerName) throws InvalidAmountException {
+        super(0, ownerName);
+
         this.procent = 0.2;
     }
 
     @Override
-    public void deposit(double amount) {
+    public void deposit(double amount) throws InvalidAmountException {
         if (amount > 0) {
             double bonus = amount * procent;
             balance += (amount + bonus);
         }else
-            throw new IllegalArgumentException("Ошибка: Сумма должна быть больше 0");
+            throw new InvalidAmountException(amount);
     }
 
 }
