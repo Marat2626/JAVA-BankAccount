@@ -1,13 +1,10 @@
     package BankAccount;
-    import java.io.BufferedWriter;
-    import java.io.File;
-    import java.io.FileWriter;
-    import java.io.IOException;
+    import java.io.*;
     import java.util.HashSet;
     import java.util.Random;
     import java.util.Set;
 
-    public abstract class BankDetails implements Transaction{
+    public abstract class BankDetails implements Transaction, Serializable {
 
         protected double balance;
         protected String ownerName;

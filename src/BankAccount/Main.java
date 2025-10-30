@@ -13,6 +13,8 @@ public class Main {
     private static final AccountSaver accountSave = new FileAccountSaver();
     public static void main(String[] args) {
 
+
+
         System.out.println("╔══════════════════════════════════════════════════════╗");
         System.out.println("║                  🏦 БАНКОВСКАЯ СИСТЕМА 🏦            ║");
         System.out.println("╠══════════════════════════════════════════════════════╣");
@@ -25,16 +27,22 @@ public class Main {
         System.out.println("║  • 4 - Показать все счета 👀                         ║");
         System.out.println("║  • 5 - Перевод между счетами 🔄                      ║");
         System.out.println("║  • 6 - Добавление счетов в файл                      ║");
+        System.out.println("║  • 7 - Сохранить карты                               ║");
         System.out.println("║  • 0 - Удалить все карты ⚠️                          ║");
         System.out.println("╠══════════════════════════════════════════════════════╣");
         System.out.println("║  💡 Подсказка: Для выбора введите цифру операции     ║");
         System.out.println("╚══════════════════════════════════════════════════════╝");
         System.out.println();
 
-
+        var bankAccount = Serialization.deserializeObject("/Users/maratiskhakov/Desktop/fileTest.txt");
+        if (bankAccount != null){
+            accounts.addAll(bankAccount);
+        }
         while (true) {
-
             try {
+
+
+
                 System.out.println("Введите число");
                 int choice = scanner.nextInt();
                 scanner.nextLine();
@@ -57,6 +65,16 @@ public class Main {
                             break;
                         case 6:
                             saveAccounts();
+                            break;
+                        case 7:
+                            Serialization.serializeObject( accounts,
+                                    "/Users/maratiskhakov/Desktop/fileTest.txt"); //"/Users/maratiskhakov/IdeaProjects/BankAccount/src/BankAccount/fileBank"
+                            break;
+                        case 8:
+                             bankAccount = Serialization.deserializeObject("/Users/maratiskhakov/Desktop/fileTest.txt");
+                            if (bankAccount != null){
+                                accounts.addAll(bankAccount);
+                            }
                             break;
                         case 0:
                             accounts.clear();
@@ -82,6 +100,9 @@ public class Main {
 
 
     }
+
+
+
     private static void saveAccounts() {
         System.out.println("Укажите файл (или введите '0' для отмены):");
         String filename = scanner.next();
@@ -146,22 +167,10 @@ public class Main {
             System.out.println("Нет созданных счетов!");
             return;
         }
-        System.out.println("1 - Проверить все счета\n2 - Просмотреть все карты");
-        int input = scanner.nextInt();
+        System.out.println("Ваши счета");
 
-        switch (input){
-            case 1:
-                System.out.println("\n=== ВСЕ СЧЕТА ===");
-                for (int i = 0; i < accounts.size(); i++){
-                    System.out.println((i + 1) + ". " + accounts.get(i).getClass().getSimpleName() +
-                            " №" + accounts.get(i).getAccountNumber());
-                }
-                System.out.println();
-                break;
-            case 2:
-                for (BankDetails bankDetails : accounts){
-                    System.out.println(bankDetails.getInfo());
-                }
+        for (BankDetails bankDetails : accounts){
+            System.out.println(bankDetails.getInfo());
         }
 
     }
